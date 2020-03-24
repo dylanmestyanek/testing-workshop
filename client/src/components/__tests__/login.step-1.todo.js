@@ -18,6 +18,7 @@ test('calls onSubmit with the username and password when submitted', () => {
   // create a jest.fn() for your submit handler
   // render the Login component to a div
   // TIP: const div = document.createElement('div')
+  // 
   // get the field nodes
   // TIP: const inputs = div.querySelectorAll('input')
   // TIP: const form = div.querySelector('form')
@@ -30,7 +31,8 @@ test('calls onSubmit with the username and password when submitted', () => {
   // Assert
   // ensure your submit handler was called properly
   const div = document.createElement('div');
-  ReactDOM.render(<Login onSubmit={utilsMock.api.login} />, div);
+  const handleSubmit = jest.fn();
+  ReactDOM.render(<Login onSubmit={handleSubmit} />, div);
 
   const form = div.querySelector('form');
   const { username, password } = form.elements;
@@ -40,8 +42,8 @@ test('calls onSubmit with the username and password when submitted', () => {
 
   form.dispatchEvent(new window.Event('submit'));
 
-  expect(utilsMock.api.login).toHaveBeenCalledTimes(1);
-  expect(utilsMock.api.login).toHaveBeenCalledWith({
+  expect(handleSubmit).toHaveBeenCalledTimes(1);
+  expect(handleSubmit).toHaveBeenCalledWith({
     username: "henry",
     password: "henry"
   });
