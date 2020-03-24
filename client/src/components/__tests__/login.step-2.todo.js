@@ -10,8 +10,7 @@ import Login from '../login'
 test('calls onSubmit with the username and password when submitted', () => {
   // Arrange
   // use generate.loginForm() here
-  generate.loginForm();
-  const fakeUser = {username: 'chucknorris', password: '(╯°□°）╯︵ ┻━┻'}
+  const fakeUser = generate.loginForm();
   const handleSubmit = jest.fn()
   // use: render(<Login onSubmit={handleSubmit} />)
   // It'll give you back an object with
