@@ -1,3 +1,16 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import Login from "../login";
+import * as utilsMock from "../../utils/api";
+
+jest.mock('../../utils/api', () => {
+  return {
+    api: {
+      login: jest.fn(() => Promise.resolve())
+    }
+  }
+});
+
 // Basic unit test
 test('calls onSubmit with the username and password when submitted', () => {
   // Arrange
@@ -5,7 +18,7 @@ test('calls onSubmit with the username and password when submitted', () => {
   // create a jest.fn() for your submit handler
   // render the Login component to a div
   // TIP: const div = document.createElement('div')
-  //
+  // 
   // get the field nodes
   // TIP: const inputs = div.querySelectorAll('input')
   // TIP: const form = div.querySelector('form')
@@ -17,6 +30,24 @@ test('calls onSubmit with the username and password when submitted', () => {
   //
   // Assert
   // ensure your submit handler was called properly
+  const div = document.createElement('div');
+  const handleSubmit = jest.fn();
+  ReactDOM.render(<Login onSubmit={handleSubmit} />, div);
+
+  const form = div.querySelector('form');
+  const { username, password } = form.elements;
+
+  username.value = "henry";
+  password.value = "henry";
+
+  form.dispatchEvent(new window.Event('submit'));
+
+  expect(handleSubmit).toHaveBeenCalledTimes(1);
+  expect(handleSubmit).toHaveBeenCalledWith({
+    username: "henry",
+    password: "henry"
+  });
+
 })
 
 //////// Elaboration & Feedback /////////
@@ -28,8 +59,8 @@ test('calls onSubmit with the username and password when submitted', () => {
 /*
 http://ws.kcd.im/?ws=Testing&e=login.step-1&em=
 */
-test.skip('I submitted my elaboration and feedback', () => {
-  const submitted = false // change this when you've submitted!
+test('I submitted my elaboration and feedback', () => {
+  const submitted = true // change this when you've submitted!
   expect(submitted).toBe(true)
 })
 ////////////////////////////////
